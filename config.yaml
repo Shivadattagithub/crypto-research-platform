@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────
+#  Crypto Research Platform — Central Config
+# ─────────────────────────────────────────────
+
+symbols:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  - BNBUSDT
+
+intervals:
+  default: "4h"
+  fast:    "1h"
+  slow:    "1d"
+
+data:
+  lookback_days: 365
+  binance_base_url: "https://api.binance.com"
+  bybit_base_url:   "https://api.bybit.com"
+  okx_base_url:     "https://www.okx.com"
+
+api_keys:
+  glassnode: "YOUR_GLASSNODE_API_KEY"   # Free tier at glassnode.com
+
+strategies:
+  momentum:
+    short_window: 20
+    long_window:  50
+    trend_filter: true
+    trend_window: 200
+
+  mean_reversion:
+    zscore_window:  30
+    entry_threshold: 2.0
+    exit_threshold:  0.5
+
+  funding_carry:
+    min_funding_threshold: 0.0003
+    max_holding_periods:   8
+
+risk:
+  initial_capital:    10000
+  position_size_pct:  0.95
+  max_drawdown_pct:   0.15       # Circuit breaker — halt at 15% drawdown
+  taker_fee:          0.0006
+  kelly_fraction:     0.25       # Fractional Kelly for position sizing
+
+  var:
+    confidence_level: 0.95
+    lookback_days:    30
+
+alerts:
+  funding_rate_threshold: 0.0005
+  spread_threshold:       0.0003
+  liquidation_threshold:  1_000_000   # USD — alert on large liquidations
+
+logging:
+  level: "INFO"
+  file:  "logs/platform.log"
